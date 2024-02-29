@@ -57,9 +57,35 @@ app.get("/airkorea", async (req, res) => {
           pm10: ersult.data.list[0]["pm10Value"],
           pm25: result.data.list[0]["pm25Value"],
         };
+        const badAir = [];
+        //pm10은 미세먼지 수치
+        if (airItem.pm10 <= 30) {
+          badAir.push("좋음");
+        } else if (pm10 > 30 && pm10 <= 80) {
+          badAir.push("보통");
+        } else {
+          badAir.push("나쁨");
+        }
       } catch (error) {
         console.log(error);
       }
+
+      //pm25는 초미세먼지 수치
+      if (airItem.pm25 <= 15) {
+        badAir.push("좋음");
+      } else if (pm10 > 15 && pm10 <= 35) {
+        badAir.push("보통");
+      } else {
+        badAir.push("나쁨");
+      }
+
+      const airItems = [airItem.locatoin, airItem.time, badAir[0], badAir[1]];
+      airItem.forEach((val) => {
+        client.rPush("airItems", val);
+      });
+      client.expire("airItems", 60 * 60);
+
+      res.send("캐시된 데이터가 없습니다.");
     }
   });
   //   서버와 포트 연결..
