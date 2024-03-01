@@ -18,6 +18,7 @@
     "morgan": "^1.10.0",
     "redis": "^4.6.13",
     "request": "^2.88.2",
+    "require": "^2.4.20",
     "uuid-apikey": "^1.5.3"
   },
   "devDependencies": {
