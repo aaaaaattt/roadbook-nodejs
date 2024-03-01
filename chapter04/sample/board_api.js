@@ -46,7 +46,7 @@ app.put("/board/:id", (req, res) => {
   });
 
   const idx = boardList.indexOf(findItem);
-  boardList.splice(ids, 1);
+  boardList.splice(idx, 1);
 
   //리스트에 새로운 요소 추가
   const board = {
